@@ -1,0 +1,4 @@
+four026_cabinet:
+    resource: "@Four026CabinetBundle/Resources/config/routing.yml"
+    prefix:   /
+

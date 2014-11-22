@@ -1,0 +1,4 @@
+services:
+#    four026_cabinet.example:
+#        class: Four026\CabinetBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

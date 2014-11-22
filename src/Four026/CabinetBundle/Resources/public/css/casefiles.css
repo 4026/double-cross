@@ -1,0 +1,62 @@
+@import url(http://fonts.googleapis.com/css?family=Indie+Flower);
+@import url(http://fonts.googleapis.com/css?family=Special+Elite);
+
+body
+{
+    background-color: #eeeeee;
+}
+
+
+.casefile
+{
+    transition: top,left,box-shadow 0.5s,0.5s,0.5s;
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    height: 297px;
+    width: 210px;
+
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+
+    margin: 40px auto;
+
+    cursor: pointer;
+}
+.casefile:hover
+{
+    top: -5px;
+    left: -5px;
+    box-shadow: 7px 7px 5px rgba(0,0,0,0.2);
+}
+
+.casefile.casefile-typewritten
+{
+    padding: 30px;
+    font-family: 'Special Elite', monospace;
+}
+
+.casefile.casefile-handwritten
+{
+    padding: 30px;
+    font-family: 'Indie Flower', cursive;
+}
+
+.casefile.casefile-newsprint
+{
+    padding: 30px;
+    font-family: serif;
+}
+
+.casefile.casefile-image
+{
+    padding: 0;
+    height: auto;
+}
+.casefile.casefile-image img
+{
+    width: 100%;
+}

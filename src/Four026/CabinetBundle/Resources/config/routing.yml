@@ -1,0 +1,7 @@
+four026_cabinet_homepage:
+    path:     /{character_name}
+    defaults: { _controller: Four026CabinetBundle:Default:index }
+
+four026_cabinet_read:
+    path:     /{character_name}/Read/{document_name}
+    defaults: { _controller: Four026CabinetBundle:Default:read }

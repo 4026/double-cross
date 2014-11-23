@@ -6,7 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($character_name)
+    public function indexAction()
+    {
+        return $this->render('Four026CabinetBundle:Default:cover.html.twig');
+    }
+
+    public function listDocumentsAction($character_name)
     {
         return $this->render('Four026CabinetBundle:Default:list_documents.html.twig', array('character_name' => $character_name));
     }

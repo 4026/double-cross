@@ -10,8 +10,26 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $client->request('GET', '/');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $this->assertTrue($client->getResponse()->getStatusCode() == 200);
+    }
+
+    public function testListDocuments()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/Fabien');
+
+        $this->assertTrue($crawler->filter('html:contains("Fabien")')->count() > 0);
+    }
+
+    public function testRead()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/Fabien/Read/LoremIpsum');
+
+        $this->assertTrue($crawler->filter('html:contains("Lorem Ipsum")')->count() > 0);
     }
 }

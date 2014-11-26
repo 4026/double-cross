@@ -4,12 +4,15 @@ four026_cabinet_cover:
 
 four026_cabinet_login:
     path:     /login
-    defaults: { _controller: Four026CabinetBundle:Default:index }
+    defaults: { _controller: Four026CabinetBundle:Default:login }
+
+four026_cabinet_login_check:
+    path:     /login_check
 
 four026_cabinet_listDocuments:
-    path:     /{character_name}
+    path:     /desk/{character_name}
     defaults: { _controller: Four026CabinetBundle:Default:listDocuments }
 
 four026_cabinet_read:
-    path:     /{character_name}/read/{document_name}
+    path:     /desk/{character_name}/{document_name}
     defaults: { _controller: Four026CabinetBundle:Default:read }

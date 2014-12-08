@@ -1,19 +1,23 @@
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+{% extends "Four026CabinetBundle:Default:cover.html.twig" %}
 
-<form action="{{ path('four026_cabinet_login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+{% block circle_content %}
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+    <h3>Login</h3>
 
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
+    <form action="{{ path('four026_cabinet_login_check') }}" method="post">
+        <input type="text" id="username" name="_username" placeholder="Username" value="{{ last_username }}" />
+        <input type="password" id="password" placeholder="Password" name="_password" />
 
-    <button type="submit">login</button>
-</form>
+        {# The URL the user is redirected to on success #}
+        <input type="hidden" name="_target_path" value="{{ path('four026_cabinet_listDocuments') }}" />
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Go</button>
+    </form>
+
+
+
+{% endblock %}

@@ -1,6 +1,6 @@
 
 $(function() {
     $('.casefile').click(function() {
-        window.location.assign('./millicent/read/interview');
+        window.location.assign($(this).data('readpath'));
     });
 });

@@ -1,5 +1,7 @@
 {% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
 
+{% set navigation_items = [['four026_cabinet_cover', 'About'], ['four026_cabinet_login', 'Login']] %}
+{% set active_path = app.request.attributes.get('_route') %}
 
 {% block stylesheets %}
     {% stylesheets '@Four026CabinetBundle/Resources/public/css/cover.css' filter='cssrewrite' %}
@@ -19,24 +21,27 @@
                     <h2 class="masthead-brand">The Archivist</h2>
                     <nav>
                         <ul class="nav masthead-nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Login</a></li>
+                            {% for item in navigation_items %}
+                                <li{% if item[0] == active_path %} class="active"{% endif %}>
+                                    <a href="{{ path(item[0]) }}">{{item[1]}}</a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </nav>
                 </div>
             </div>
 
             <div class="inner cover">
-                <p class="lead">The Archivist is a story for 2-6 players, that plays out over 7 days.</p>
-                <p>
-                    <a href="#" class="btn btn-default">Learn more</a>
-                </p>
-                <p>
-                    <a href="#" class="btn btn-primary">Sign up</a>
-                    <a href="#" class="btn btn-success">Sign in</a>
-                </p>
-
+                {% block circle_content %}
+                    <p class="lead">The Archivist is a story for 2-6 players, that plays out over 7 days.</p>
+                    <p>
+                        <a href="#" class="btn btn-default">Learn more</a>
+                    </p>
+                    <p>
+                        <a href="#" class="btn btn-primary">Sign up</a>
+                        <a href="{{ path('four026_cabinet_login') }}" class="btn btn-success">Log in</a>
+                    </p>
+                {% endblock %}
             </div>
 
         </div>

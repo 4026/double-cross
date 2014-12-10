@@ -2,8 +2,10 @@
 
 namespace Four026\CabinetBundle\Controller;
 
+use Four026\CabinetBundle\Entity\Document;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class DefaultController extends Controller
@@ -45,11 +47,31 @@ class DefaultController extends Controller
 
     public function listDocumentsAction($character_name)
     {
-        return $this->render('Four026CabinetBundle:Default:list_documents.html.twig', array('character_name' => $character_name));
+        $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
+
+        return $this->render('Four026CabinetBundle:Default:list_documents.html.twig',
+            [
+                'character_name' => $character_name,
+                'documents' => $document_repository->findAll()
+            ]
+        );
     }
 
     public function readAction($character_name, $document_name)
     {
         return $this->render('Four026CabinetBundle:Default:read.html.twig', array('character_name' => $character_name, 'document_name', $document_name));
+    }
+
+    public function createDocumentAction($document_name)
+    {
+        $new_document = new Document();
+        $new_document->setName($document_name);
+        $new_document->setType('casefile-typewritten');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($new_document);
+        $em->flush();
+
+        return new Response('Created document id '.$new_document->getId());
     }
 }

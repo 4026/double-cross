@@ -54,6 +54,17 @@
         </div>
     </div>
 
+    <div class='row'>
+        {% for document in documents %}
+        <div class='col-sm-4 col-md-3'>
+            <div class="casefile {{ document.type }}" style="transform: rotate({{ random(10) - 5 }}deg);"
+                 data-readpath="{{ path('four026_cabinet_read', {'character_name': character_name, 'document_name': document.name}) }}">
+                <h4>{{ document.name }}</h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
     <hr />
 </div>
 {% endblock %}

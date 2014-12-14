@@ -15,3 +15,5 @@
 /app/data
 /.elasticbeanstalk/
 
+
+.elasticbeanstalk/

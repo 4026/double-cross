@@ -11,5 +11,7 @@
 /composer.phar
 /.idea/*
 /nbproject/*
-/.vagrant/
-.elasticbeanstalk/
+/.vagrant/
+/app/data
+/.elasticbeanstalk/
+

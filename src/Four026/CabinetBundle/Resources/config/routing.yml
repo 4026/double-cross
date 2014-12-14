@@ -17,6 +17,10 @@ four026_cabinet_read:
     path:     /desk/{character_name}/{document_name}
     defaults: { _controller: Four026CabinetBundle:Default:read }
 
+four026_cabinet_createUser:
+    path:     /createUser/{username}
+    defaults: { _controller: Four026CabinetBundle:Default:createUser }
+
 four026_cabinet_createDocument:
     path:     /createDocument/{document_name}
     defaults: { _controller: Four026CabinetBundle:Default:createDocument }

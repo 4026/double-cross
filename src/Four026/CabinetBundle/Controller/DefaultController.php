@@ -3,6 +3,7 @@
 namespace Four026\CabinetBundle\Controller;
 
 use Four026\CabinetBundle\Entity\Document;
+use Four026\CabinetBundle\Entity\WebUser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,5 +74,18 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response('Created document id '.$new_document->getId());
+    }
+
+    public function createUserAction($username)
+    {
+        $new_user = new WebUser();
+        $new_user->setUsername($username);
+        $new_user->setPassword('password');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($new_user);
+        $em->flush();
+
+        return new Response('Created user id '.$new_user->getId());
     }
 }

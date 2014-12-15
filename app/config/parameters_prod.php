@@ -43,7 +43,7 @@ $container->setParameter('mailer_user', null);
 $container->setParameter('mailer_password', null);
 
 $container->setParameter('locale', 'en');
-$container->setParameter('secret', 'ThisTokenIsNotSoSecretChangeIt');
+$container->setParameter('secret', $_SERVER['RDS_PASSWORD']);
 $container->setParameter('debug_toolbar', false);
 $container->setParameter('debug_redirects', false);
 $container->setParameter('use_assetic_controller', false);

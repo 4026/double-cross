@@ -117,9 +117,9 @@ body {
 
 .cover {
     box-sizing: border-box;
-    height: 300px;
+    min-height: 300px;
     width: 300px;
-    border-radius: 50%;
+    border-radius: 150px;
 
     margin: auto;
     padding: 60px 40px;
@@ -131,32 +131,43 @@ body {
     font-weight: bold;
 }
 
+/*
+ * Form styling
+ */
+
 .cover input[type=text],
+.cover input[type=email],
+.cover input[type=number],
 .cover input[type=password]
 {
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid #666;
     padding: 5px 10px;
     width: 100%;
-}
-
-.cover input[type=text]
-{
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom: none;
-}
-.cover input[type=password]
-{
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    margin-bottom: 20px;
+    color: #eeeeee;
 }
 
 .cover .alert
 {
     padding: 5px 10px;
 }
+
+/*
+ * Login form
+ */
+#form_login input[type=text]
+{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: none;
+}
+#form_login input[type=password]
+{
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-bottom: 20px;
+}
+
 
 /*
  * Footer

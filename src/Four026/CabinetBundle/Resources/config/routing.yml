@@ -24,3 +24,14 @@ four026_cabinet_createUser:
 four026_cabinet_createDocument:
     path:     /createDocument/{document_name}
     defaults: { _controller: Four026CabinetBundle:Default:createDocument }
+
+
+#Account registration
+
+show_registration_form:
+    path:     /register
+    defaults: { _controller: Four026CabinetBundle:Registration:showForm }
+
+submit_registration_form:
+    path:     /register/submit
+    defaults: { _controller: Four026CabinetBundle:Registration:submitForm }

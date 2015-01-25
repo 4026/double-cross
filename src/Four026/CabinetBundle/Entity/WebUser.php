@@ -13,7 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
+ * @UniqueEntity(fields="email_address", message="Email already taken")
  */
 class WebUser implements UserInterface, \Serializable
 {
@@ -30,6 +31,7 @@ class WebUser implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=30, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -37,6 +39,8 @@ class WebUser implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email_address", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email_address;
 
@@ -45,6 +49,8 @@ class WebUser implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=64)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=6)
      */
     private $password;
 
@@ -98,7 +104,7 @@ class WebUser implements UserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {

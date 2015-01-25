@@ -5,12 +5,15 @@ namespace Four026\CabinetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * WebUser
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity(fields="email", message="Email already taken")
  */
 class WebUser implements UserInterface, \Serializable
 {
@@ -24,7 +27,6 @@ class WebUser implements UserInterface, \Serializable
     private $id;
 
     /**
-     * The bcrypt-hash of the user's password
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=30, unique=true)
@@ -32,6 +34,14 @@ class WebUser implements UserInterface, \Serializable
     private $username;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="email_address", type="string", length=255, unique=true)
+     */
+    private $email_address;
+
+    /**
+     * The bcrypt-hash of the user's password
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=64)
@@ -169,5 +179,28 @@ class WebUser implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set email_address
+     *
+     * @param string $emailAddress
+     * @return WebUser
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->email_address = $emailAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get email_address
+     *
+     * @return string 
+     */
+    public function getEmailAddress()
+    {
+        return $this->email_address;
     }
 }

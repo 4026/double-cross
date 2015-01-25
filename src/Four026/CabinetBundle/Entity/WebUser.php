@@ -24,6 +24,7 @@ class WebUser implements UserInterface, \Serializable
     private $id;
 
     /**
+     * The bcrypt-hash of the user's password
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=30, unique=true)

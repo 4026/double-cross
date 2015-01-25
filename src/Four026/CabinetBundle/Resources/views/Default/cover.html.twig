@@ -7,6 +7,19 @@
     {% stylesheets '@Four026CabinetBundle/Resources/public/css/cover.css' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+
+    <style type="text/css">
+        body {
+            background-image: url('{{ random ([
+                'http://files.doobybrain.com/wp-content/uploads/2013/09/public-library-of-cincinnati.jpg',
+                'http://3.bp.blogspot.com/_oC8TwXe4PF0/TN9g0XtAg7I/AAAAAAAABP4/IAPJ-Fm6Vws/s1600/image-150568-galleryV9-ejsp.jpg',
+                'http://images6.alphacoders.com/403/403923.jpg',
+                'http://laughingsquid.com/wp-content/uploads/2014/09/6838150900_0ae0967ec5_h.jpg',
+                'http://bigpicture.ru/wp-content/uploads/2013/08/soviet11.jpg'
+            ]) }}');
+        }
+    </style>
+
 {% endblock %}
 
 {% block main_content %}
@@ -18,7 +31,7 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h2 class="masthead-brand">The Archivist</h2>
+                    <h2 class="masthead-brand">Double Cross</h2>
                     <nav>
                         <ul class="nav masthead-nav">
                             {% for item in navigation_items %}
@@ -33,7 +46,7 @@
 
             <div class="inner cover">
                 {% block circle_content %}
-                    <p class="lead">The Archivist is a story for 2-6 players, that plays out over 7 days.</p>
+                    <p class="lead">Double Cross is a story of mistrust, espionage and murder for 2 players.</p>
                     <p>
                         <a href="#" class="btn btn-default">Learn more</a>
                     </p>

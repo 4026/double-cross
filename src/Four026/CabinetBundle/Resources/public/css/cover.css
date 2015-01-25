@@ -35,7 +35,7 @@ body {
     color: #fff;
     text-align: center;
     text-shadow: 0 1px 3px rgba(0,0,0,.5);
-    background: #333 no-repeat center url('http://files.doobybrain.com/wp-content/uploads/2013/09/public-library-of-cincinnati.jpg');
+    background: #333 no-repeat center;
     background-size: cover;
 }
 

@@ -67,7 +67,7 @@ class DefaultController extends Controller
     {
         $new_document = new Document();
         $new_document->setName($document_name);
-        $new_document->setType('casefile-typewritten');
+        $new_document->setBodyText('casefile-typewritten');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($new_document);

@@ -31,9 +31,9 @@ class Document
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="bodyText", type="text")
      */
-    private $type;
+    private $bodyText;
 
 
     /**
@@ -72,12 +72,13 @@ class Document
     /**
      * Set type
      *
-     * @param string $type
-     * @return Document
+     * @param string $bodyText
+     *
+*@return Document
      */
-    public function setType($type)
+    public function setBodyText($bodyText)
     {
-        $this->type = $type;
+        $this->bodyText = $bodyText;
 
         return $this;
     }
@@ -87,8 +88,8 @@ class Document
      *
      * @return string 
      */
-    public function getType()
+    public function getBodyText()
     {
-        return $this->type;
+        return $this->bodyText;
     }
 }

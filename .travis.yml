@@ -1,10 +1,10 @@
 language: php
-
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-
+- 5.4
+- 5.5
+- 5.6
 before_script: composer install -n
-
 script: phpunit -c app
+notifications:
+  slack:
+    secure: h+/68Xn2Nh3DS3XB5NgszO66B8MAlL0k66YEcNuwvIHLcyGZAWtPTD1i1jeNTQNfCHdzA0KhTBcTJmFcsNiHVb4g8B8y+lHZ+TQuQb1mdvdn1hEnjvNSwzm1R/fsP9AN5mPtX9JX/FIsOD2mWGSAJUPvy8lDZiJLiAlsFiJS0is=

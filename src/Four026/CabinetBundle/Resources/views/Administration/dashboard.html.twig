@@ -1,0 +1,50 @@
+{% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
+
+{% block main_content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Double-Cross admin site</h1>
+        <p>Welcome, {{ user.username }}</p>
+    </div>
+</div>
+
+<div class='container'>
+
+    <h1>{{ users|length }} <small>Users</small></h1>
+    <div class="row">
+        {% for user in users %}
+        <div class='col-xs-6 col-sm-3 col-md-1'>
+            {{ user.username }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <hr />
+
+    <h1>
+        {{ documents|length }}
+        <small>Documents</small>
+        <a href="{{ path('show_create_document_form') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-file"></span>
+            Create new document
+        </a>
+    </h1>
+
+    <div class="panel-group">
+        {% for document in documents %}
+        <div class='panel panel-default'>
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ document.name }}</h3>
+            </div>
+            <div class="panel-body">
+                {% autoescape false %}
+                {{ document.bodyText }}
+                {% endautoescape %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

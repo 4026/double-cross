@@ -17,7 +17,7 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        desk:
+        all:
             pattern:   ^/
             anonymous: ~
             form_login:
@@ -25,4 +25,5 @@ security:
                 default_target_path: four026_cabinet_listDocuments
 
     access_control:
+        - { path: ^/admin, roles: ROLE_USER }
         - { path: ^/desk, roles: ROLE_USER }

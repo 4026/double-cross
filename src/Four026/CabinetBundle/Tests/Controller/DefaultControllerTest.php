@@ -21,6 +21,7 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/login');
 
+        $this->assertTrue($client->getResponse()->getStatusCode() == 200);
         $this->assertTrue($crawler->filter('html:contains("Login")')->count() > 0);
     }
 }

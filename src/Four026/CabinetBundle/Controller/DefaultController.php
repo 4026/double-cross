@@ -62,30 +62,4 @@ class DefaultController extends Controller
     {
         return $this->render('Four026CabinetBundle:Default:read.html.twig', array('character_name' => $character_name, 'document_name', $document_name));
     }
-
-    public function createDocumentAction($document_name)
-    {
-        $new_document = new Document();
-        $new_document->setName($document_name);
-        $new_document->setBodyText('casefile-typewritten');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($new_document);
-        $em->flush();
-
-        return new Response('Created document id '.$new_document->getId());
-    }
-
-    public function createUserAction($username)
-    {
-        $new_user = new WebUser();
-        $new_user->setUsername($username);
-        $new_user->setPassword('password');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($new_user);
-        $em->flush();
-
-        return new Response('Created user id '.$new_user->getId());
-    }
 }

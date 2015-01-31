@@ -17,15 +17,6 @@ four026_cabinet_read:
     path:     /desk/{character_name}/{document_name}
     defaults: { _controller: Four026CabinetBundle:Default:read }
 
-four026_cabinet_createUser:
-    path:     /createUser/{username}
-    defaults: { _controller: Four026CabinetBundle:Default:createUser }
-
-four026_cabinet_createDocument:
-    path:     /createDocument/{document_name}
-    defaults: { _controller: Four026CabinetBundle:Default:createDocument }
-
-
 #Account registration
 
 show_registration_form:
@@ -35,3 +26,17 @@ show_registration_form:
 submit_registration_form:
     path:     /register/submit
     defaults: { _controller: Four026CabinetBundle:Registration:submitForm }
+
+#Administration
+
+admin_dashboard:
+    path:     /admin/
+    defaults: { _controller: Four026CabinetBundle:Administration:dashboard }
+
+show_create_document_form:
+    path:     /admin/createDocument
+    defaults: { _controller: Four026CabinetBundle:Administration:showCreateDocumentForm }
+
+submit_create_document_form:
+    path:     /admin/createDocument/submit
+    defaults: { _controller: Four026CabinetBundle:Administration:submitCreateDocumentForm }

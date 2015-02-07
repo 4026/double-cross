@@ -282,6 +282,20 @@ class WebUser implements UserInterface, \Serializable
     }
 
     /**
+     * Get an array of unlocked document IDs for this user.
+     * @return array
+     */
+    public function getUnlockedDocumentIds()
+    {
+        $ids = [];
+        foreach ($this->getUnlockedDocuments() as $document)
+        {
+            $ids[] = $document->getId();
+        }
+        return $ids;
+    }
+
+    /**
      * Add unlocked_notes
      *
      * @param Note $unlockedNotes

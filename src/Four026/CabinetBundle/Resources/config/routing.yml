@@ -48,3 +48,7 @@ show_create_note_form:
 submit_create_note_form:
     path:     /admin/createNote/submit
     defaults: { _controller: Four026CabinetBundle:Administration:submitCreateNoteForm }
+
+unlock_document:
+    path:     /admin/unlockDocument/{user_id}/{document_id}
+    defaults: { _controller: Four026CabinetBundle:Administration:unlockDocument }

@@ -4,9 +4,11 @@ namespace Four026\CabinetBundle\Controller;
 
 use Four026\CabinetBundle\Entity\Document;
 use Four026\CabinetBundle\Entity\Note;
+use Four026\CabinetBundle\Entity\WebUser;
 use Four026\CabinetBundle\Form\Type\DocumentType;
 use Four026\CabinetBundle\Form\Type\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdministrationController extends Controller
@@ -108,4 +110,25 @@ class AdministrationController extends Controller
         );
     }
 
+
+    public function unlockDocumentAction($user_id, $document_id)
+    {
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getDoctrine()->getRepository('Four026CabinetBundle:WebUser')->find($user_id);
+        /**
+         * @var Document $document
+         */
+        $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+
+        $user->addUnlockedDocument($document);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        //return new JsonResponse(['success' => true]);
+        return $this->redirect($this->generateUrl('admin_dashboard'));
+    }
 }

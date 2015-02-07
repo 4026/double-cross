@@ -11,6 +11,7 @@
 
 <div class='container'>
 
+    <!-- Users -->
     <h1>{{ users|length }} <small>Users</small></h1>
     <div class="row">
         {% for user in users %}
@@ -22,6 +23,7 @@
 
     <hr />
 
+    <!-- Documents -->
     <h1>
         {{ documents|length }}
         <small>Documents</small>
@@ -43,6 +45,33 @@
                 {% endautoescape %}
             </div>
         </div>
+        {% endfor %}
+    </div>
+
+    <hr />
+
+    <!-- Notes -->
+    <h1>
+        {{ notes|length }}
+        <small>Notes</small>
+        <a href="{{ path('show_create_note_form') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-file"></span>
+            Create new note
+        </a>
+    </h1>
+
+    <div class="panel-group">
+        {% for note in notes %}
+            <div class='panel panel-default'>
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ note.name }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% autoescape false %}
+                    {{ note.bodyText }}
+                    {% endautoescape %}
+                </div>
+            </div>
         {% endfor %}
     </div>
 

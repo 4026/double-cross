@@ -40,3 +40,11 @@ show_create_document_form:
 submit_create_document_form:
     path:     /admin/createDocument/submit
     defaults: { _controller: Four026CabinetBundle:Administration:submitCreateDocumentForm }
+
+show_create_note_form:
+    path:     /admin/createNote
+    defaults: { _controller: Four026CabinetBundle:Administration:showCreateNoteForm }
+
+submit_create_note_form:
+    path:     /admin/createNote/submit
+    defaults: { _controller: Four026CabinetBundle:Administration:submitCreateNoteForm }

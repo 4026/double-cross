@@ -12,8 +12,6 @@
 /.idea/*
 /nbproject/*
 /.vagrant/
-/app/data
-app/DoctrineMigrations
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

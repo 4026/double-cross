@@ -2,6 +2,7 @@
 
 namespace Four026\CabinetBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -54,6 +55,43 @@ class WebUser implements UserInterface, \Serializable
      */
     private $password;
 
+    /**
+     * The player's partner.
+     * @var WebUser
+     * @ORM\OneToOne(targetEntity="WebUser")
+     **/
+    private $partner;
+
+    /**
+     * The documents that this user has unlocked.
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Document")
+     * @ORM\JoinTable(name="webusers_documents",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="document_id", referencedColumnName="id")}
+     *      )
+     */
+    private $unlocked_documents;
+
+    /**
+     * The notes that this user has unlocked.
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Note")
+     * @ORM\JoinTable(name="webusers_notes",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
+     *      )
+     */
+    private $unlocked_notes;
+
+
+    public function __construct()
+    {
+        $this->unlocked_documents = new ArrayCollection();
+        $this->unlocked_notes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -96,7 +134,7 @@ class WebUser implements UserInterface, \Serializable
      */
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+        $this->password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
         return $this;
     }
@@ -119,11 +157,11 @@ class WebUser implements UserInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->username,
             $this->password
-        ));
+        ]);
     }
 
     /**
@@ -162,7 +200,7 @@ class WebUser implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     /**
@@ -208,5 +246,94 @@ class WebUser implements UserInterface, \Serializable
     public function getEmailAddress()
     {
         return $this->email_address;
+    }
+
+    /**
+     * Add unlocked_documents
+     *
+     * @param Document $unlockedDocuments
+     * @return WebUser
+     */
+    public function addUnlockedDocument(Document $unlockedDocuments)
+    {
+        $this->unlocked_documents[] = $unlockedDocuments;
+
+        return $this;
+    }
+
+    /**
+     * Remove unlocked_documents
+     *
+     * @param Document $unlockedDocuments
+     */
+    public function removeUnlockedDocument(Document $unlockedDocuments)
+    {
+        $this->unlocked_documents->removeElement($unlockedDocuments);
+    }
+
+    /**
+     * Get unlocked_documents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUnlockedDocuments()
+    {
+        return $this->unlocked_documents;
+    }
+
+    /**
+     * Add unlocked_notes
+     *
+     * @param Note $unlockedNotes
+     * @return WebUser
+     */
+    public function addUnlockedNote(Note $unlockedNotes)
+    {
+        $this->unlocked_notes[] = $unlockedNotes;
+
+        return $this;
+    }
+
+    /**
+     * Remove unlocked_notes
+     *
+     * @param Note $unlockedNotes
+     */
+    public function removeUnlockedNote(Note $unlockedNotes)
+    {
+        $this->unlocked_notes->removeElement($unlockedNotes);
+    }
+
+    /**
+     * Get unlocked_notes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUnlockedNotes()
+    {
+        return $this->unlocked_notes;
+    }
+
+    /**
+     * Set partner
+     *
+     * @param WebUser $partner
+     * @return WebUser
+     */
+    public function setPartner(WebUser $partner = null)
+    {
+        $this->partner = $partner;
+
+        return $this;
+    }
+
+    /**
+     * Get partner
+     *
+     * @return WebUser
+     */
+    public function getPartner()
+    {
+        return $this->partner;
     }
 }

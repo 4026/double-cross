@@ -1,9 +1,54 @@
 @import url(http://fonts.googleapis.com/css?family=Indie+Flower);
 @import url(http://fonts.googleapis.com/css?family=Special+Elite);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(http://fonts.googleapis.com/css?family=Michroma);
 
 body
 {
-    background-color: #eeeeee;
+    background-color: #ddd;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.jumbotron
+{
+    position: relative;
+    overflow: hidden;
+}
+.jumbotron:before
+{
+    content: " ";
+    background-color: #48497C;
+    border: 100px solid #8DA38A;
+    position: absolute;
+    bottom: -180px;
+    right: -570px;
+    width: 900px;
+    height: 400px;
+    transform: rotate(-30deg);
+}
+.jumbotron:after
+{
+    content: " ";
+    background-color: rgba(124, 28, 26, 0.6);
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+}
+.jumbotron h2
+{
+    font-family: 'Michroma', sans-serif;
+    text-transform: uppercase;
+    border-bottom: 5px solid #333333;
+
+    padding-bottom: 10px;
+}
+.jumbotron .container
+{
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -43,6 +88,9 @@ body
 {
     padding: 30px;
     font-family: 'Indie Flower', cursive;
+    background-image: url('http://subtlepatterns.com/patterns/lined_paper.png');
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .casefile.casefile-newsprint
@@ -59,4 +107,55 @@ body
 .casefile.casefile-image img
 {
     width: 100%;
+}
+
+/* Document folder tabs */
+#document-tabs > ul.nav-tabs > li > a {
+    background-color: rgb(179, 164, 109);
+    color: #000;
+    font-family: 'Special Elite', monospace;
+}
+#document-tabs > ul.nav-tabs > li.active > a
+{
+    background-color: rgb(213, 200, 151);
+}
+
+#document-tabs > .tab-content
+{
+    background-color: rgb(213, 200, 151);
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 50px 0;
+}
+
+#document-tabs > .tab-content h1
+{
+    border-bottom: 3px solid #333;
+    padding-left: 50%;
+    padding-bottom: 10px;
+}
+#document-tabs > .tab-content p.lead
+{
+    border-bottom: 1px solid #333;
+    padding-left: 50%;
+    padding-bottom: 10px;
+}
+
+#document-tabs > .tab-content p.read-button
+{
+    font-size: 150px;
+    margin-top: 50px;
+}
+#document-tabs > .tab-content a
+{
+    color: #333;
+}
+#document-tabs > .tab-content a:hover
+{
+    color: #A92D2D;
+}
+
+#document-tabs > ul.nav-tabs > li:not(.active) > a:hover
+{
+    background-color: rgb(197, 184, 138);
+    border: 1px solid transparent;
 }

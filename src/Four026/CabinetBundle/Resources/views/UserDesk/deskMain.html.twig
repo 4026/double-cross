@@ -1,0 +1,56 @@
+{% extends "Four026CabinetBundle:UserDesk:deskBase.html.twig" %}
+
+{% block jumbotron_content %}
+    <h2>Operation Double-Cross</h2>
+    <p>Agent {{ user.username }}, 9th Nov 1956</p>
+{% endblock %}
+
+
+{% block main_container %}
+    <div role="tabpanel" id="document-tabs">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            {% for document in user.unlockedDocuments %}
+                <li role="presentation" {% if loop.last %}class="active"{% endif %}>
+                    <a href="#document_{{ document.id }}" aria-controls="{{ document.name }}" role="tab" data-toggle="tab">
+                        <span class="hidden-sm hidden-xs">{{ document.name }}</span>
+                        <span class="visible-sm-inline">{{ document.name[:5] }}...</span>
+                        <span class="visible-xs-inline">{{ document.name[:1] }}...</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% for document in user.unlockedDocuments %}
+                <div role="tabpanel" class="tab-pane{% if loop.last %} active{% endif %}" id="document_{{ document.id }}">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1">
+                            <h1>{{ document.name }}</h1>
+                            <p class="lead">Berlin, 09:42 9th Nov 1956</p>
+                            <p class="read-button text-center">
+                                <a href="{{ path('read_document', {'document_id': document.id}) }}">
+                                    <span class="glyphicon glyphicon-play-circle"></span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class='row'>
+        {% for note in user.unlockedNotes %}
+            <div class='col-sm-4 col-md-3'>
+                <div class="casefile casefile-typewritten" style="transform: rotate({{ random(20) - 10 }}deg);">
+                    <h4>{{ note.name }}</h4>
+                    <p>{{ note.bodyText }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

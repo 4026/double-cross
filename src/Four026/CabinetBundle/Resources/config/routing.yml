@@ -1,6 +1,10 @@
+#Front page
+
 four026_cabinet_cover:
     path:     /
     defaults: { _controller: Four026CabinetBundle:Default:index }
+
+#Login
 
 four026_cabinet_login:
     path:     /login
@@ -8,14 +12,6 @@ four026_cabinet_login:
 
 four026_cabinet_login_check:
     path:     /login_check
-
-four026_cabinet_listDocuments:
-    path:     /desk/{character_name}
-    defaults: { _controller: Four026CabinetBundle:Default:listDocuments, character_name: Millicent }
-
-four026_cabinet_read:
-    path:     /desk/{character_name}/{document_name}
-    defaults: { _controller: Four026CabinetBundle:Default:read }
 
 #Account registration
 
@@ -52,3 +48,13 @@ submit_create_note_form:
 unlock_document:
     path:     /admin/unlockDocument/{user_id}/{document_id}
     defaults: { _controller: Four026CabinetBundle:Administration:unlockDocument }
+
+#User desk pages
+
+desk_main:
+    path:     /desk/
+    defaults: { _controller: Four026CabinetBundle:UserDesk:deskMain }
+
+read_document:
+    path:     /desk/read/{document_id}
+    defaults: { _controller: Four026CabinetBundle:UserDesk:readDocument }

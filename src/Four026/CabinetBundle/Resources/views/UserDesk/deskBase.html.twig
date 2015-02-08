@@ -1,0 +1,28 @@
+{% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
+
+{% block javascripts %}
+    {% javascripts '@Four026CabinetBundle/Resources/public/js/list_documents.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets '@Four026CabinetBundle/Resources/public/css/casefiles.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block main_content %}
+
+<div class="jumbotron">
+    <div class="container">
+        {% block jumbotron_content %}
+        {% endblock %}
+    </div>
+</div>
+
+<div class='container'>
+    {% block main_container %}
+    {% endblock %}
+</div>
+{% endblock %}

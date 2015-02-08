@@ -1,0 +1,32 @@
+{% extends "Four026CabinetBundle:UserDesk:deskBase.html.twig" %}
+
+{% block jumbotron_content %}
+    <h2>{{ document.name }}</h2>
+    <p>Agent {{ user.username }}, 9th Nov 1956</p>
+{% endblock %}
+
+{% block main_container %}
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div style="background-color: #fff; padding: 40px; font-size: 18px">
+                {% autoescape false %}
+                {{ document.bodyText }}
+                {% endautoescape %}
+
+                <p>
+                    <a class="btn btn-lg btn-primary" href="{{ path('desk_main') }}">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="hidden-xs hidden-sm col-md-4">
+            <a class="btn btn-lg btn-primary" href="{{ path('desk_main') }}">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
+            </a>
+        </div>
+
+    </div>
+
+{% endblock %}

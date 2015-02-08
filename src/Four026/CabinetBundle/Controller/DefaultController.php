@@ -37,29 +37,25 @@ class DefaultController extends Controller
 
         return $this->render(
             'Four026CabinetBundle:Security:login.html.twig',
-            array(
+            [
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error'         => $error,
-            )
-        );
-    }
-
-
-    public function listDocumentsAction($character_name)
-    {
-        $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
-
-        return $this->render('Four026CabinetBundle:Default:list_documents.html.twig',
-            [
-                'character_name' => $character_name,
-                'documents' => $document_repository->findAll()
             ]
         );
     }
 
+
+    public function userDeskAction()
+    {
+
+    }
+
     public function readAction($character_name, $document_name)
     {
-        return $this->render('Four026CabinetBundle:Default:read.html.twig', array('character_name' => $character_name, 'document_name', $document_name));
+        return $this->render(
+            'Four026CabinetBundle:Default:read.html.twig',
+            ['character_name' => $character_name, 'document_name', $document_name]
+        );
     }
 }

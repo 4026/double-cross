@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserDeskControllerTest extends WebTestCase
 {
-    public function testDeskmain()
+    public function testDeskMain()
     {
         $client = static::createClient();
 

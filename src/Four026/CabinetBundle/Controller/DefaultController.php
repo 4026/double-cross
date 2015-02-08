@@ -44,18 +44,4 @@ class DefaultController extends Controller
             ]
         );
     }
-
-
-    public function userDeskAction()
-    {
-
-    }
-
-    public function readAction($character_name, $document_name)
-    {
-        return $this->render(
-            'Four026CabinetBundle:Default:read.html.twig',
-            ['character_name' => $character_name, 'document_name', $document_name]
-        );
-    }
 }

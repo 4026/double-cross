@@ -48,4 +48,31 @@ class UserDeskController extends Controller
         );
     }
 
+    /**
+     * Page at which the current user can read the specified note.
+     * @param int $note_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function readNoteAction($note_id)
+    {
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getUser();
+
+        if (!in_array($note_id, $user->getUnlockedNoteIds()))
+        {
+            throw $this->createAccessDeniedException('You have not unlocked this note yet.');
+        }
+
+        $note = $this->getDoctrine()->getRepository('Four026CabinetBundle:Note')->find($note_id);
+        return $this->render(
+            'Four026CabinetBundle:UserDesk:read.html.twig',
+            [
+                'user' => $user,
+                'document' => $note
+            ]
+        );
+    }
+    
 }

@@ -111,6 +111,12 @@ class AdministrationController extends Controller
     }
 
 
+    /**
+     * Unlocks the specfied document for the specified user.
+     * @param int $user_id
+     * @param int $document_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function unlockDocumentAction($user_id, $document_id)
     {
         /**
@@ -123,6 +129,33 @@ class AdministrationController extends Controller
         $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
 
         $user->addUnlockedDocument($document);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        //return new JsonResponse(['success' => true]);
+        return $this->redirect($this->generateUrl('admin_dashboard'));
+    }
+
+    /**
+     * Unlocks the specfied note for the specified user.
+     * @param int $user_id
+     * @param int $note_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function unlockNoteAction($user_id, $note_id)
+    {
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getDoctrine()->getRepository('Four026CabinetBundle:WebUser')->find($user_id);
+        /**
+         * @var Note $note
+         */
+        $note = $this->getDoctrine()->getRepository('Four026CabinetBundle:Note')->find($note_id);
+
+        $user->addUnlockedNote($note);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

@@ -48,6 +48,10 @@ submit_create_note_form:
 unlock_document:
     path:     /admin/unlockDocument/{user_id}/{document_id}
     defaults: { _controller: Four026CabinetBundle:Administration:unlockDocument }
+    
+unlock_note:
+    path:     /admin/unlockNote/{user_id}/{note_id}
+    defaults: { _controller: Four026CabinetBundle:Administration:unlockNote }
 
 #User desk pages
 
@@ -58,3 +62,7 @@ desk_main:
 read_document:
     path:     /desk/read/{document_id}
     defaults: { _controller: Four026CabinetBundle:UserDesk:readDocument }
+
+read_note:
+    path:     /desk/readNote/{note_id}
+    defaults: { _controller: Four026CabinetBundle:UserDesk:readNote }

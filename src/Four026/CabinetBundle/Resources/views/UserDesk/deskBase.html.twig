@@ -1,13 +1,19 @@
 {% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
 
 {% block javascripts %}
-    {% javascripts '@Four026CabinetBundle/Resources/public/js/list_documents.js' %}
+    {% javascripts
+        '@Four026CabinetBundle/Resources/public/js/list_documents.js'
+        '//cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/1.7.2/jquery.dotdotdot.min.js'
+    %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets '@Four026CabinetBundle/Resources/public/css/casefiles.css' filter='cssrewrite' %}
+    {% stylesheets
+        '@Four026CabinetBundle/Resources/public/css/casefiles.css'
+        filter='cssrewrite'
+    %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}

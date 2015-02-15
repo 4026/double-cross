@@ -329,6 +329,20 @@ class WebUser implements UserInterface, \Serializable
     }
 
     /**
+     * Get an array of unlocked note IDs for this user.
+     * @return array
+     */
+    public function getUnlockedNoteIds()
+    {
+        $ids = [];
+        foreach ($this->getUnlockedNotes() as $note)
+        {
+            $ids[] = $note->getId();
+        }
+        return $ids;
+    }
+
+    /**
      * Set partner
      *
      * @param WebUser $partner

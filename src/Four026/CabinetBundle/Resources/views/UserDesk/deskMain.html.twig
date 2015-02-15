@@ -46,9 +46,14 @@
     <div class='row'>
         {% for note in user.unlockedNotes %}
             <div class='col-sm-4 col-md-3'>
-                <div class="casefile casefile-typewritten" style="transform: rotate({{ random(20) - 10 }}deg);">
+                <div class="casefile casefile-handwritten ellipsis"
+                    style="transform: rotate({{ random(20) - 10 }}deg);"
+                    data-readpath="{{ path('read_note', {'note_id' : note.id }) }}"
+                    >
                     <h4>{{ note.name }}</h4>
-                    <p>{{ note.bodyText }}</p>
+                    {% autoescape false %}
+                    {{ note.bodyText }}
+                    {% endautoescape %}
                 </div>
             </div>
         {% endfor %}

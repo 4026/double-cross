@@ -13,10 +13,13 @@ class UserDeskController extends Controller
      */
     public function deskMainAction()
     {
+        $generator = new \Four026\Passphrase\PassphraseGenerator(__DIR__ . '/../Resources/config/passphrase_wordlist');
+
         return $this->render(
             'Four026CabinetBundle:UserDesk:deskMain.html.twig',
             [
-                'user' => $this->getUser()
+                'user' => $this->getUser(),
+                'passphrase' => $generator->generate()
             ]
         );
     }

@@ -841,12 +841,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/4026/passphrase.git",
-                "reference": "f9f37d52377d4ce21fe9d691e563dd161250059b"
+                "reference": "ba952d2ef749be37ea98fc79c9815a86c0e74dc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/4026/passphrase/zipball/f9f37d52377d4ce21fe9d691e563dd161250059b",
-                "reference": "f9f37d52377d4ce21fe9d691e563dd161250059b",
+                "url": "https://api.github.com/repos/4026/passphrase/zipball/ba952d2ef749be37ea98fc79c9815a86c0e74dc1",
+                "reference": "ba952d2ef749be37ea98fc79c9815a86c0e74dc1",
                 "shasum": ""
             },
             "require": {
@@ -878,7 +878,7 @@
                 "password",
                 "xkcd"
             ],
-            "time": "2015-02-20 18:17:10"
+            "time": "2015-02-22 08:56:05"
         },
         {
             "name": "incenteev/composer-parameter-handler",

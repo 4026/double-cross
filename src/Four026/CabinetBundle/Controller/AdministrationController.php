@@ -7,6 +7,7 @@ use Four026\CabinetBundle\Entity\Note;
 use Four026\CabinetBundle\Entity\WebUser;
 use Four026\CabinetBundle\Form\Type\DocumentType;
 use Four026\CabinetBundle\Form\Type\NoteType;
+use Four026\Passphrase\PassphraseGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,13 +20,25 @@ class AdministrationController extends Controller
         $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
         $note_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Note');
 
+        $generator = new PassphraseGenerator(__DIR__ . '/../Resources/config/passphrase_wordlist.csv');
+
+        $phrase = sprintf(
+            "%s that the %s in %s is %s %s.",
+            $generator->getRandomWord('intro'),
+            $generator->getRandomWord('location'),
+            $generator->getRandomWord('city'),
+            $generator->getRandomWord('adjective'),
+            $generator->getRandomWord('when')
+        );
+
         return $this->render(
             'Four026CabinetBundle:Administration:dashboard.html.twig',
             [
                 'user'      => $this->getUser(),
                 'users'     => $user_repository->findAll(),
                 'documents' => $document_repository->findAll(),
-                'notes'     => $note_repository->findAll()
+                'notes'     => $note_repository->findAll(),
+                'phrase'    => $phrase
             ]
         );
     }

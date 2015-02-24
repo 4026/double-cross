@@ -1,141 +1,182 @@
-snow,noun
-sunshine,noun
-flower market,noun
-public transport,noun
-traffic,noun
-river,noun
-photography,noun
-sightseeing,noun
-rationing,noun
-cathedral,noun
-beer,noun
-bridge,noun
-road network,noun
-sewer system,noun
-university,noun
-passport office,noun
-employment office,noun
-French Quarter,noun
-Old Town,noun
-port,noun
-canal network,noun
-tram system,noun
-metro,noun
-Moscow,place
-St. Petersburg,place
-Berlin,place
-Vladivostok,place
-Novosibirsk,place
-Siberia,place
-London,place
-Paris,place
-New York,place
-Kamchatka,place
-Stalingrad,place
-Leningrad,place
-Odessa,place
-Vienna,place
-Munich,place
-Stuttgart,place
-Amsterdam,place
-Frankfurt,place
-Helsinki,place
-Stockholm,place
-Copenhagen,place
-Rome,place
-Madrid,place
-Athens,place
-Ankara,place
-Bucharest,place
-Sofia,place
-Zurich,place
-Budapest,place
-cold,adjective
-warm,adjective
-prospering,adjective
-failing,adjective
-over-burdened,adjective
-always late,adjective
-overwhelming,adjective
-troublesome,adjective
-abundant,adjective
-in short supply,adjective
-carefully controlled,adjective
-without merit,adjective
+I am told,intro
+I have heard,intro
+My father believes,intro
+My mother says,intro
+My brother told me,intro
+My landlady says,intro
+My aunt heard,intro
+My uncle says,intro
+My grandfather is convinced,intro
+My grandmother says,intro
+An old friend told me,intro
+I heard somewhere,intro
+It is surely just a rumour,intro
+Only fools believe,intro
+The locals know,intro
+Tourists are unaware,intro
+This newspaper says,intro
+It was on the radio this morning,intro
+The word on the street is,intro
+A tramp just told me,intro
+A policeman advised me,intro
+A barman assured me,intro
+
+flower market,location
+train station,location
+bank of the river,location
+central bank,location
+Grand Hotel,location
+ration office,location
+cathedral,location
+best beer hall,location
+railway bridge,location
+bus depot,location
+sewer system,location
+university,location
+passport office,location
+employment office,location
+French Quarter,location
+Old Town,location
+port,location
+canal network,location
+tram system,location
+metro,location
+square in front of the palace,location
+Guild Hall,location
+memorial park,location
+art gallery,location
+public library,location
+business district,location
+steel foundry,location
+hospital,location
+airport,location
+newspaper booth by the statue of the President,location
+old Imperial theatre,location
+opera house,location
+
+Moscow,city
+St. Petersburg,city
+Berlin,city
+Vladivostok,city
+Novosibirsk,city
+Smolensk,city
+London,city
+Paris,city
+Lisbon,city
+Monaco,city
+Luxembourg,city
+Brussels,city
+Antwerp,city
+Stalingrad,city
+Leningrad,city
+Odessa,city
+Vienna,city
+Munich,city
+Stuttgart,city
+Amsterdam,city
+Frankfurt,city
+Maastricht,city
+Geneva,city
+Bern,city
+Helsinki,city
+Stockholm,city
+Copenhagen,city
+Rome,city
+Madrid,city
+Athens,city
+Ankara,city
+Bucharest,city
+Sofia,city
+Zurich,city
+Budapest,city
+Rīga,city
+Tallinn,city
+Petrozavodsk,city
+Oslo,city
+Kaliningrad,city
+Minsk,city
+Kiev,city
+Lviv,city
+Kharkov,city
+Volgagrad,city
+Voronezh,city
+Warsaw,city
+Prague,city
+Leipzig,city
+Dresden,city
+Nuremberg,city
+Hamburg,city
+Cologne,city
+Düsseldorf,city
+Bratislava,city
+Zagreb,city
+Belgrade,city
+Sevastopol,city
+Tbilisi,city
+Murmansk,city
+Arkhangelsk,city
+
+a cold place to be,adjective
+the only warmth to be had,adjective
+surprisingly profitable,adjective
+swarming with tourists,adjective
+filled with policemen,adjective
+the best place to buy cigarettes,adjective
+overcrowded,adjective
+unmissable,adjective
+filled with the sound of jazz,adjective
+filled with the smell of pipe smoke,adjective
+the only place you can get blue jeans,adjective
+open only to VIPs,adjective
+blissfully quiet,adjective
+hateful,adjective
 remarkable,adjective
-unreliable,adjective
+not at its best,adjective
 beautiful,adjective
+unbearable,adjective
 glorious,adjective
-in spring,during
-in summer,during
-in autumn,during
-in winter,during
-in January,during
-in February,during
-in March,during
-in April,during
-in May,during
-in June,during
-in July,during
-in August,during
-in September,during
-in October,during
-in November,during
-in December,during
-this year,during
-this week,during
-this month,during
-today,during
-ever since the war,during
-in the morning,during
-in the afternoon,during
-agent
-agency
-organisation
-blueprints
-plans
-schematics
-research
-photograph
-secret
-nuclear
-submarine
-satellite
-stealth
-technology
-scientist
-defector
-double-agent
-informant
-assassin
-target
-dissident
-terrorist
-agitator
-propaganda
-agitprop
-radio
-message
-transmission
-communication
-cipher
-code
-encryption
-briefcase
-folio
-file
-microfiche
-document
-prototype
-film
-blackmail
-mole
-infiltrate
-alarm
-destabilise
-exchange
-checkpoint
-bridge
-railway
-road
-bomb
+the last refuge of the poor,adjective
+still there despite everything that happened,adjective
+a quiet spot to read a newspaper,adjective
+best avoided,adjective
+dangerous for the unwary,adjective
+overrun by panhandlers,adjective
+riddled with pickpockets,adjective
+where all the immigrants congregate,adjective
+the best place to pick up a boyfriend,adjective
+the best place to take your girlfriend,adjective
+a hive of political activity,adjective
+home to dozens of bats,adjective
+buzzing with mosquitoes,adjective
+closed,adjective
+
+in spring,when
+in summer,when
+in autumn,when
+in winter,when
+in January,when
+in February,when
+in March,when
+in April,when
+in May,when
+in June,when
+in July,when
+in August,when
+in September,when
+in October,when
+in November,when
+in December,when
+this year,when
+this week,when
+this month,when
+today,when
+since the war,when
+in the morning,when
+in the afternoon,when
+in the evening,when
+at night,when
+at dusk,when
+at dawn,when
+after curfew,when
+- at least for the time being,when
+while the reconstruction companies are working,when

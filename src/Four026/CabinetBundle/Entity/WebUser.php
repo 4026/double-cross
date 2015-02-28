@@ -4,6 +4,7 @@ namespace Four026\CabinetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Four026\Passphrase\PassphraseGenerator;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,6 +38,7 @@ class WebUser implements UserInterface, \Serializable
     private $username;
 
     /**
+     * The user's e-mail address
      * @var string
      *
      * @ORM\Column(name="email_address", type="string", length=255, unique=true)
@@ -56,11 +58,27 @@ class WebUser implements UserInterface, \Serializable
     private $password;
 
     /**
+     * The passphrase that another user must use to designate this user as their partner.
+     * @var string
+     *
+     * @ORM\Column(name="passphrase", type="string", length=255)
+     */
+    private $passphrase;
+
+    /**
      * The player's partner.
      * @var WebUser
      * @ORM\OneToOne(targetEntity="WebUser")
      **/
     private $partner;
+
+    /**
+     * The character that this user is playing as.
+     * @var Character
+     *
+     * @ORM\ManyToOne(targetEntity="Character")
+     */
+    private $character;
 
     /**
      * The documents that this user has unlocked.
@@ -91,6 +109,18 @@ class WebUser implements UserInterface, \Serializable
     {
         $this->unlocked_documents = new ArrayCollection();
         $this->unlocked_notes = new ArrayCollection();
+
+        //Generate a new passphrase for this user.
+        $generator = new PassphraseGenerator(__DIR__ . '/../Resources/config/passphrase_wordlist.csv');
+
+        $this->passphrase = sprintf(
+            "%s that the %s in %s is %s %s.",
+            $generator->getRandomWord('intro'),
+            $generator->getRandomWord('location'),
+            $generator->getRandomWord('city'),
+            $generator->getRandomWord('adjective'),
+            $generator->getRandomWord('when')
+        );
     }
 
     /**
@@ -363,5 +393,51 @@ class WebUser implements UserInterface, \Serializable
     public function getPartner()
     {
         return $this->partner;
+    }
+
+    /**
+     * Set passphrase
+     *
+     * @param string $passphrase
+     * @return WebUser
+     */
+    public function setPassphrase($passphrase)
+    {
+        $this->passphrase = $passphrase;
+
+        return $this;
+    }
+
+    /**
+     * Get passphrase
+     *
+     * @return string 
+     */
+    public function getPassphrase()
+    {
+        return $this->passphrase;
+    }
+
+    /**
+     * Set character
+     *
+     * @param integer $character
+     * @return WebUser
+     */
+    public function setCharacter($character)
+    {
+        $this->character = $character;
+
+        return $this;
+    }
+
+    /**
+     * Get character
+     *
+     * @return integer 
+     */
+    public function getCharacter()
+    {
+        return $this->character;
     }
 }

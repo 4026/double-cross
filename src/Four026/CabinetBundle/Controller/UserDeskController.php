@@ -13,13 +13,10 @@ class UserDeskController extends Controller
      */
     public function deskMainAction()
     {
-
-
         return $this->render(
             'Four026CabinetBundle:UserDesk:deskMain.html.twig',
             [
-                'user' => $this->getUser(),
-                'passphrase' => $phrase
+                'user' => $this->getUser()
             ]
         );
     }

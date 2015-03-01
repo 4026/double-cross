@@ -20,7 +20,8 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "four026/passphrase": "dev-master"
+        "four026/passphrase": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "2.2.x-dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

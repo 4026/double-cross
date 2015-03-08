@@ -13,12 +13,18 @@ class UserDeskController extends Controller
      */
     public function deskMainAction()
     {
-        return $this->render(
-            'Four026CabinetBundle:UserDesk:deskMain.html.twig',
-            [
-                'user' => $this->getUser()
-            ]
-        );
+        $fields = array('user' => $this->getUser());
+
+        if ($this->getUser()->getPartner() == null) {
+            $fields['partnerForm'] = $this->createFormBuilder()
+                ->add('name', 'text')
+                ->add('code_phrase', 'text')
+                ->add('make_contact', 'submit')
+                ->getForm()
+                ->createView();
+        }
+
+        return $this->render('Four026CabinetBundle:UserDesk:deskMain.html.twig', $fields);
     }
 
     /**

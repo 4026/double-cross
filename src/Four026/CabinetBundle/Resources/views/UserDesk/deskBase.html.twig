@@ -1,10 +1,9 @@
 {% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
 
 {% block javascripts %}
-    {% javascripts
-        '@Four026CabinetBundle/Resources/public/js/list_documents.js'
-        '//cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/1.7.2/jquery.dotdotdot.min.js'
-    %}
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/1.7.2/jquery.dotdotdot.min.js'></script>
+    <script type="text/javascript" src='/zeroclipboard/ZeroClipboard.min.js'></script>
+    {% javascripts '@Four026CabinetBundle/Resources/public/js/list_documents.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

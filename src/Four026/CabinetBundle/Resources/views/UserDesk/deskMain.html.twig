@@ -7,55 +7,97 @@
 
 
 {% block main_container %}
-    <div role="tabpanel" id="document-tabs">
 
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            {% for document in user.unlockedDocuments %}
-                <li role="presentation" {% if loop.last %}class="active"{% endif %}>
-                    <a href="#document_{{ document.id }}" aria-controls="{{ document.name }}" role="tab" data-toggle="tab">
-                        <span class="hidden-sm hidden-xs">{{ document.name }}</span>
-                        <span class="visible-sm-inline">{{ document.name[:5] }}...</span>
-                        <span class="visible-xs-inline">{{ document.name[:1] }}...</span>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+    {% if partnerForm is defined %}
+        <h1>Thanks for signing up</h1>
+        <p>
+            Before you are given the full details of your assignment, you'll need to make contact with your partner. When
+            they enrol, they'll need to use this code phrase to be linked with you:
+        </p>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-            {% for document in user.unlockedDocuments %}
-                <div role="tabpanel" class="tab-pane{% if loop.last %} active{% endif %}" id="document_{{ document.id }}">
-                    <div class="row">
-                        <div class="col-xs-10 col-xs-offset-1">
-                            <h1>{{ document.name }}</h1>
-                            <p class="lead">Berlin, 09:42 9th Nov 1956</p>
-                            <p class="read-button text-center">
-                                <a href="{{ path('read_document', {'document_id': document.id}) }}">
-                                    <span class="glyphicon glyphicon-play-circle"></span>
-                                </a>
-                            </p>
+        <div class="input-group">
+            <input type="text" id="input_codephrase" class="form-control input-lg" value="{{ user.passphrase }}"
+                   readonly placeholder="Code phrase" />
+            <span class="input-group-btn">
+                <button type="button" id="btn_copy" class="btn btn-info btn-lg" data-clipboard-target="input_codephrase">
+                    <span class="glyphicon glyphicon-copy"></span>
+                    Copy
+                </button>
+            </span>
+        </div>
+
+        <hr />
+
+        <p>
+            Alternatively, if you know your partner's name and code phrase already, you can enter it below to be put in
+            touch with them, and we'll take care of everything from there.
+        </p>
+
+        {{ form_start(partnerForm) }}
+            {{ form_errors(partnerForm) }}
+            {{ form_row(partnerForm.name, { 'attr': {'class': 'input-lg'} }) }}
+            {{ form_row(partnerForm.code_phrase, { 'attr': {'class': 'input-lg'} }) }}
+            {{ form_row(partnerForm.make_contact, { 'attr': {'class': 'btn-primary btn-lg'} }) }}
+        {{ form_end(partnerForm) }}
+
+
+    {% endif %}
+
+    {% if user.unlockedDocuments|length > 0 %}
+        <div role="tabpanel" id="document-tabs">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                {% for document in user.unlockedDocuments %}
+                    <li role="presentation" {% if loop.last %}class="active"{% endif %}>
+                        <a href="#document_{{ document.id }}" aria-controls="{{ document.name }}" role="tab" data-toggle="tab">
+                            <span class="hidden-sm hidden-xs">{{ document.name }}</span>
+                            <span class="visible-sm-inline">{{ document.name[:5] }}...</span>
+                            <span class="visible-xs-inline">{{ document.name[:1] }}...</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for document in user.unlockedDocuments %}
+                    <div role="tabpanel" class="tab-pane{% if loop.last %} active{% endif %}" id="document_{{ document.id }}">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-1">
+                                <h1>{{ document.name }}</h1>
+                                <p class="lead">Berlin, 09:42 9th Nov 1956</p>
+                                <p class="read-button text-center">
+                                    <a href="{{ path('read_document', {'document_id': document.id}) }}">
+                                        <span class="glyphicon glyphicon-play-circle"></span>
+                                    </a>
+                                </p>
+                            </div>
                         </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    {% endif %}
+
+
+    {% if user.unlockedNotes|length > 0 %}
+        <div class='row'>
+            {% for note in user.unlockedNotes %}
+                <div class='col-sm-4 col-md-3'>
+                    <div class="casefile casefile-handwritten ellipsis"
+                        style="transform: rotate({{ random(20) - 10 }}deg);"
+                        data-readpath="{{ path('read_note', {'note_id' : note.id }) }}"
+                        >
+                        <h4>{{ note.name }}</h4>
+                        {% autoescape false %}
+                        {{ note.bodyText }}
+                        {% endautoescape %}
                     </div>
                 </div>
             {% endfor %}
         </div>
+    {% endif %}
 
-    </div>
-
-    <div class='row'>
-        {% for note in user.unlockedNotes %}
-            <div class='col-sm-4 col-md-3'>
-                <div class="casefile casefile-handwritten ellipsis"
-                    style="transform: rotate({{ random(20) - 10 }}deg);"
-                    data-readpath="{{ path('read_note', {'note_id' : note.id }) }}"
-                    >
-                    <h4>{{ note.name }}</h4>
-                    {% autoescape false %}
-                    {{ note.bodyText }}
-                    {% endautoescape %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
 {% endblock %}

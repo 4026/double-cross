@@ -74,9 +74,9 @@ class WebUser implements UserInterface, \Serializable
 
     /**
      * The character that this user is playing as.
-     * @var Character
+     * @var PlayerCharacter
      *
-     * @ORM\ManyToOne(targetEntity="Character")
+     * @ORM\ManyToOne(targetEntity="PlayerCharacter")
      */
     private $character;
 

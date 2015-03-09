@@ -3,13 +3,13 @@ namespace Four026\CabinetBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Four026\CabinetBundle\Entity\Character;
+use Four026\CabinetBundle\Entity\PlayerCharacter;
 
 /**
  * Data fixture that loads the standard character data for double-cross.
  * @package Four026\CabinetBundle\DataFixtures\ORM
  */
-class LoadCharacterData implements FixtureInterface {
+class LoadPlayerCharacterData implements FixtureInterface {
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -18,7 +18,7 @@ class LoadCharacterData implements FixtureInterface {
      */
     function load(ObjectManager $manager)
     {
-        $jan = new Character();
+        $jan = new PlayerCharacter();
         $jan
             ->setName("Jan")
             ->setBio(
@@ -31,7 +31,7 @@ class LoadCharacterData implements FixtureInterface {
             );
         $manager->persist($jan);
 
-        $eva = new Character();
+        $eva = new PlayerCharacter();
         $eva
             ->setName("Eva")
             ->setBio(

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Character
+class PlayerCharacter
 {
     /**
      * @var integer
@@ -52,7 +52,7 @@ class Character
      * Set name
      *
      * @param string $name
-     * @return Character
+     * @return PlayerCharacter
      */
     public function setName($name)
     {
@@ -75,7 +75,7 @@ class Character
      * Set bio
      *
      * @param string $bio
-     * @return Character
+     * @return PlayerCharacter
      */
     public function setBio($bio)
     {

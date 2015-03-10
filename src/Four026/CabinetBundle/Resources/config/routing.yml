@@ -65,4 +65,8 @@ read_document:
 
 read_note:
     path:     /desk/readNote/{note_id}
-    defaults: { _controller: Four026CabinetBundle:UserDesk:readNote }
+    defaults: { _controller: Four026CabinetBundle:UserDesk:readNote}
+
+submit_code_phrase_form:
+    path:     /desk/handshake/passphrase
+    defaults: { _controller: Four026CabinetBundle:UserDesk:submitCodePhraseHandshakeForm}

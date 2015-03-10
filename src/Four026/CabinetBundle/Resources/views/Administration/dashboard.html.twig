@@ -42,6 +42,14 @@
                     <div class='col-sm-6 col-md-3'>
                         <h4>{{ user.username }}</h4>
 
+                        <dl class="dl-horizontal">
+                            <dt>Partner</dt>
+                            <dd>{{ user.partner.username|default('None') }}</dd>
+
+                            <dt>Character</dt>
+                            <dd>{{ user.character|default('None') }}</dd>
+                        </dl>
+
                         <div class="panel panel-default">
                             <div class="panel-heading">Documents</div>
                             <ul class="list-group">

@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * WebUser
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Four026\CabinetBundle\Entity\WebUserRepository")
  * @UniqueEntity(fields="username", message="Username already taken")
  * @UniqueEntity(fields="email_address", message="Email already taken")
  */

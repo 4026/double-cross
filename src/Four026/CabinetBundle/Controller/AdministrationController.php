@@ -48,9 +48,7 @@ class AdministrationController extends Controller
         $form = $this->createForm(
             new DocumentType(),
             new Document(),
-            [
-                'action' => $this->generateUrl('submit_create_document_form'),
-            ]
+            ['action' => $this->generateUrl('submit_create_document_form'),]
         );
 
         return $this->render(

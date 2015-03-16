@@ -421,7 +421,7 @@ class WebUser implements UserInterface, \Serializable
     /**
      * Set character
      *
-     * @param integer $character
+     * @param PlayerCharacter $character
      * @return WebUser
      */
     public function setCharacter($character)
@@ -434,7 +434,7 @@ class WebUser implements UserInterface, \Serializable
     /**
      * Get character
      *
-     * @return integer 
+     * @return PlayerCharacter
      */
     public function getCharacter()
     {

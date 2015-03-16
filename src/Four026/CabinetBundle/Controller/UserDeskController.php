@@ -20,9 +20,18 @@ class UserDeskController extends Controller
      */
     public function deskMainAction()
     {
-        $fields = ['user' => $this->getUser()];
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getUser();
+        $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
+        $fields = [
+            'user' => $user,
+            'characters' => $character_repository->findAll()
+        ];
 
-        if ($this->getUser()->getPartner() == null) {
+        if ($user->getPartner() == null) {
+            //If the user doesn't have a partner yet, show them the form to register one...
             $fields['partnerForm'] = $this->createForm(
                 new CodePhraseHandshakeType(),
                 new CodePhraseHandshake(),
@@ -129,6 +138,46 @@ class UserDeskController extends Controller
         $fields['partnerForm'] = $form->createView();
 
         return $this->render('Four026CabinetBundle:UserDesk:deskMain.html.twig', $fields);
+    }
+
+    /**
+     * Endpoint that handles a user selecting a character.
+     * @param string $character_name
+     * @return RedirectResponse
+     *
+     * @todo Unlock the first document for each character.
+     */
+    public function chooseCharacterAction($character_name)
+    {
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getUser();
+
+        if ($user->getCharacter() != null) {
+            return $this->redirect($this->generateUrl('desk_main'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
+
+        $selected_character = $character_repository->findOneByName($character_name);
+        $other_character = $character_repository
+            ->createQueryBuilder('c')
+            ->where('c.name != :name')
+            ->setParameter('name', $character_name)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+
+        $user
+            ->setCharacter($selected_character)
+            ->getPartner()
+            ->setCharacter($other_character);
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('desk_main'));
     }
     
 }

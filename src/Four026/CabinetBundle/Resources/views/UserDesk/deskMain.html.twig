@@ -40,8 +40,33 @@
             {{ form_row(partnerForm.make_contact, { 'attr': {'class': 'btn-primary btn-lg'} }) }}
         {{ form_end(partnerForm) }}
 
+    {% elseif user.character is null %}
+        <h1>Choose a character</h1>
 
+        <div class="row">
+            {% for character in characters  %}
+                <div class="col-xs-12 col-sm-6">
+                    <h2>{{ character.name }}</h2>
+                    <p>{{ character.bio }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for character in characters  %}
+                <div class="col-xs-6 text-center">
+                    <p>
+                        <a href="{{ path('choose_character', {'character_name': character.name}) }}" role="button"
+                           class="btn btn-lg btn-primary">
+                            Choose {{ character.name }}
+                        </a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
+
+
 
     {% if user.unlockedDocuments|length > 0 %}
         <div role="tabpanel" id="document-tabs">

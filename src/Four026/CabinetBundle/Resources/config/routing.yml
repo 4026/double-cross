@@ -70,3 +70,7 @@ read_note:
 submit_code_phrase_form:
     path:     /desk/handshake/passphrase
     defaults: { _controller: Four026CabinetBundle:UserDesk:submitCodePhraseHandshakeForm}
+
+choose_character:
+    path:     /desk/chooseCharacter/{character_name}
+    defaults: { _controller: Four026CabinetBundle:UserDesk:chooseCharacter}

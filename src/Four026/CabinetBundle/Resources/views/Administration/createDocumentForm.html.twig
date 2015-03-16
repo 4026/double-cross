@@ -1,14 +1,18 @@
 {% extends "Four026CabinetBundle:Default:bootstrap_base.html.twig" %}
 
 {% block main_content %}
-<div class="container" >
-    <h3>Create Document</h3>
+    <div class="container">
+        <h3>Create Document</h3>
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
         {{ form_errors(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.bodyText, { 'attr': {'rows': 20} }) }}
+        {{ form_row(form.character) }}
+        {{ form_row(form.previousDocument) }}
+        {{ form_row(form.unlockType) }}
+        {{ form_row(form.unlockParam, { 'attr': { 'placeholder' : '(eg. the required password)'}}) }}
         {{ form_row(form.save, { 'attr': {'class': 'btn-primary'} }) }}
-    {{ form_end(form) }}
-</div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

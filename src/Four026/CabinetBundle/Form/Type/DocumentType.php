@@ -17,7 +17,24 @@ class DocumentType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('bodyText', 'textarea')
-            ->add('save', 'submit');
+            ->add('character', 'entity', [
+                'class' => 'Four026CabinetBundle:PlayerCharacter',
+                'property' => 'name',
+                'expanded' => true
+            ])
+            ->add('previousDocument', 'entity', [
+                'class' => 'Four026CabinetBundle:Document',
+                'property' => 'name',
+                'placeholder' => '(none)',
+                'empty_data' => null,
+                'required' => false
+            ])
+            ->add('unlockType', 'entity', [
+                'class' => 'Four026CabinetBundle:DocumentUnlockMethod',
+                'expanded' => true
+            ])
+            ->add('unlockParam', 'text', ['label' => 'Unlock parameters', 'required' => false])
+            ->add('save', 'submit')
         ;
     }
     

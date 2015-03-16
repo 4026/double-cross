@@ -26,7 +26,7 @@ class UserDeskController extends Controller
         $user = $this->getUser();
         $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
         $fields = [
-            'user' => $user,
+            'user'       => $user,
             'characters' => $character_repository->findAll()
         ];
 
@@ -54,12 +54,12 @@ class UserDeskController extends Controller
          */
         $user = $this->getUser();
 
-        if (!in_array($document_id, $user->getUnlockedDocumentIds()))
-        {
+        if (!in_array($document_id, $user->getUnlockedDocumentIds())) {
             throw $this->createAccessDeniedException('You have not unlocked this document yet.');
         }
 
         $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+
         return $this->render(
             'Four026CabinetBundle:UserDesk:read.html.twig',
             [
@@ -81,16 +81,16 @@ class UserDeskController extends Controller
          */
         $user = $this->getUser();
 
-        if (!in_array($note_id, $user->getUnlockedNoteIds()))
-        {
+        if (!in_array($note_id, $user->getUnlockedNoteIds())) {
             throw $this->createAccessDeniedException('You have not unlocked this note yet.');
         }
 
         $note = $this->getDoctrine()->getRepository('Four026CabinetBundle:Note')->find($note_id);
+
         return $this->render(
             'Four026CabinetBundle:UserDesk:read.html.twig',
             [
-                'user' => $user,
+                'user'     => $user,
                 'document' => $note
             ]
         );
@@ -144,8 +144,6 @@ class UserDeskController extends Controller
      * Endpoint that handles a user selecting a character.
      * @param string $character_name
      * @return RedirectResponse
-     *
-     * @todo Unlock the first document for each character.
      */
     public function chooseCharacterAction($character_name)
     {
@@ -158,26 +156,46 @@ class UserDeskController extends Controller
             return $this->redirect($this->generateUrl('desk_main'));
         }
 
-        $em = $this->getDoctrine()->getManager();
+        //Load character entities
         $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
-
         $selected_character = $character_repository->findOneByName($character_name);
         $other_character = $character_repository
             ->createQueryBuilder('c')
             ->where('c.name != :name')
             ->setParameter('name', $character_name)
             ->getQuery()
-            ->getSingleResult()
-        ;
+            ->getSingleResult();
 
+        //Get starting documents to unlock for each player.
+        $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
+        $unlockType_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:DocumentUnlockMethod');
+        $unlock_at_start = $unlockType_repository->findOneByName('Start');
+        $user_document = $document_repository->findOneBy(
+            [
+                'character'  => $selected_character->getId(),
+                'unlockType' => $unlock_at_start->getId()
+            ]
+        );
+        $partner_document = $document_repository->findOneBy(
+            [
+                'character'  => $other_character->getId(),
+                'unlockType' => $unlock_at_start->getId()
+            ]
+        );
+
+        //Set characters and unlocked documents for the user and their partner.
         $user
             ->setCharacter($selected_character)
-            ->getPartner()
-            ->setCharacter($other_character);
+            ->addUnlockedDocument($user_document);
 
-        $em->flush();
+        $user->getPartner()
+            ->setCharacter($other_character)
+            ->addUnlockedDocument($partner_document);
+
+        //Save changes
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->redirect($this->generateUrl('desk_main'));
     }
-    
+
 }

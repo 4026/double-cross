@@ -11,7 +11,8 @@
         {{ form_row(form.character) }}
         {{ form_row(form.previousDocument) }}
         {{ form_row(form.unlockType) }}
-        {{ form_row(form.unlockParam, { 'attr': { 'placeholder' : '(eg. the required password)'}}) }}
+        {{ form_row(form.unlockPrompt, { 'attr': { 'placeholder' : 'The question (eg. What is the code for the briefcase?))'}}) }}
+        {{ form_row(form.unlockParam, { 'attr': { 'placeholder' : 'The answer / the name of the choice that unlocks this document'}}) }}
         {{ form_row(form.save, { 'attr': {'class': 'btn-primary'} }) }}
         {{ form_end(form) }}
     </div>

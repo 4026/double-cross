@@ -306,10 +306,16 @@ class UserDeskController extends Controller
             ->getQuery()
             ->getResult();
 
+        $unlocked_document_ids = $partner->getUnlockedDocumentIds();
+        //Loop through the partner-unlocked documents...
         foreach ($partner_documents as $partner_document) {
-            // If the partner has unlocked the previous document to a document that has the "Partner" unlock method,
-            // unlock that document now.
-            if (in_array($partner_document->getPreviousDocument()->getId(), $partner->getUnlockedDocumentIds())) {
+            //...if the partner has already unlocked it, move on to the next one.
+            if (in_array($partner_document->getId(), $unlocked_document_ids)) {
+                continue;
+            }
+
+            //...if the partner has unlocked the previous document this one, unlock this one now.
+            if (in_array($partner_document->getPreviousDocument()->getId(), $unlocked_document_ids)) {
                 $partner->addUnlockedDocument($partner_document);
             }
         }

@@ -74,3 +74,7 @@ submit_code_phrase_form:
 choose_character:
     path:     /desk/chooseCharacter/{character_name}
     defaults: { _controller: Four026CabinetBundle:UserDesk:chooseCharacter}
+
+document_try_password:
+    path:     /desk/tryPassword/{document_id}
+    defaults: { _controller: Four026CabinetBundle:UserDesk:DocumentTryPassword}

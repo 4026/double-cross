@@ -1,13 +1,23 @@
 {% extends "Four026CabinetBundle:UserDesk:deskBase.html.twig" %}
 
 {% block jumbotron_content %}
+    <button class="btn btn-default pull-right">
+        <span class="glyphicon glyphicon-user"></span>
+        {{ user.username }}
+    </button>
     <h2>Operation Double-Cross</h2>
-    <p>Agent {{ user.username }}, 9th Nov 1956</p>
+    {% if user.character is not null %}
+        <p>Agent {{ user.character.name }}, 9th Nov 1956</p>
+    {% endif %}
 {% endblock %}
 
 
 {% block main_container %}
 
+    {# Display any flash notifications #}
+    {{ macros.showFlashMessages() }}
+
+    {# Show the form to register a partner, if necessary #}
     {% if partnerForm is defined %}
         <h1>Thanks for signing up</h1>
         <p>
@@ -66,8 +76,7 @@
         </div>
     {% endif %}
 
-
-
+    {# Show all unlocked documents #}
     {% if user.unlockedDocuments|length > 0 %}
         <div role="tabpanel" id="document-tabs">
 
@@ -106,7 +115,7 @@
         </div>
     {% endif %}
 
-
+    {# Show all unlocked notes #}
     {% if user.unlockedNotes|length > 0 %}
         <div class='row'>
             {% for note in user.unlockedNotes %}

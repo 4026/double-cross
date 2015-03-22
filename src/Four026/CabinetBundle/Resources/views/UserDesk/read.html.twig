@@ -9,10 +9,53 @@
     <div class="row">
         <div class="col-xs-12 col-md-8">
             <div style="background-color: #fff; padding: 40px; font-size: 18px">
+
+                {# Display any flash notifications #}
+                {{ macros.showFlashMessages() }}
+
+                {# Document body text #}
                 {% autoescape false %}
                 {{ document.bodyText }}
                 {% endautoescape %}
 
+                {% if not hasUnlockedNextDocument %}
+                    {# Show prompt to unlock next document #}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>{{ unlockPrompt }}</p>
+
+                            {% if unlockType == "Password" %}
+                                {# For passwords, show an input box #}
+                                <form method="post"
+                                      action="{{ path('document_try_password', {'document_id' : document.nextDocuments[0].id}) }}">
+                                    <div class="input-group">
+                                        <input type="text" name="password" class="form-control" placeholder="Answer...">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-info">
+                                                Try...
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                            {% elseif unlockType == "Choice" %}
+                                {# For choices, show several buttons #}
+                                <div class="row">
+                                    {% for unlockable_document in document.nextDocuments %}
+                                        <div class="col-xs-6">
+                                            <a role='button'
+                                               class="btn btn-info"
+                                               href="{{ path('make_choice', {'document_id' : unlockable_document.id}) }}">
+                                                {{ unlockable_document.unlockPrompt }}
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# Back button at the bottom of the text #}
                 <p>
                     <a class="btn btn-lg btn-primary" href="{{ path('desk_main') }}">
                         <span class="glyphicon glyphicon-circle-arrow-left"></span> Back
@@ -21,6 +64,7 @@
             </div>
         </div>
 
+        {# Show a back button to the right of the text on larger screens #}
         <div class="hidden-xs hidden-sm col-md-4">
             <a class="btn btn-lg btn-primary" href="{{ path('desk_main') }}">
                 <span class="glyphicon glyphicon-circle-arrow-left"></span> Back

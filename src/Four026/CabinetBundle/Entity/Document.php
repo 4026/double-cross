@@ -70,6 +70,14 @@ class Document
     private $unlockType;
 
     /**
+     * The string presented to users when asked to unlock this document via the specified method.
+     * @var string
+     *
+     * @ORM\Column(nullable=true)
+     */
+    private $unlockPrompt;
+
+    /**
      * The parameter string for this document's unlock method.
      * @var string
      *
@@ -245,6 +253,20 @@ class Document
     }
 
     /**
+     * Get an array of unlocked document IDs for this user.
+     * @return array
+     */
+    public function getNextDocumentIds()
+    {
+        $ids = [];
+        foreach ($this->getNextDocuments() as $document)
+        {
+            $ids[] = $document->getId();
+        }
+        return $ids;
+    }
+
+    /**
      * Get previousDocument
      *
      * @return Document
@@ -265,5 +287,28 @@ class Document
         $this->previousDocument = $previousDocument;
 
         return $this;
+    }
+
+    /**
+     * Set unlockPrompt
+     *
+     * @param string $unlockPrompt
+     * @return Document
+     */
+    public function setUnlockPrompt($unlockPrompt)
+    {
+        $this->unlockPrompt = $unlockPrompt;
+
+        return $this;
+    }
+
+    /**
+     * Get unlockPrompt
+     *
+     * @return string 
+     */
+    public function getUnlockPrompt()
+    {
+        return $this->unlockPrompt;
     }
 }

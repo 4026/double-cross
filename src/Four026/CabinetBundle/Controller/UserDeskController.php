@@ -3,6 +3,7 @@
 namespace Four026\CabinetBundle\Controller;
 
 use Four026\CabinetBundle\Entity\CodePhraseHandshake;
+use Four026\CabinetBundle\Entity\Document;
 use Four026\CabinetBundle\Entity\WebUser;
 use Four026\CabinetBundle\Entity\WebUserRepository;
 use Four026\CabinetBundle\Form\Type\CodePhraseHandshakeType;
@@ -15,7 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 class UserDeskController extends Controller
 {
     /**
-     * Page that displays the user's current game state, which documents they've unlocked, which notes are available, etc.
+     * Page that displays the user's current game state, which documents they've unlocked, which notes are available,
+     * etc.
+     *
      * @return Response
      */
     public function deskMainAction()
@@ -23,9 +26,9 @@ class UserDeskController extends Controller
         /**
          * @var WebUser $user
          */
-        $user = $this->getUser();
+        $user                 = $this->getUser();
         $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
-        $fields = [
+        $fields               = [
             'user'       => $user,
             'characters' => $character_repository->findAll()
         ];
@@ -44,34 +47,54 @@ class UserDeskController extends Controller
 
     /**
      * Page at which the current user can read the specified document.
+     *
      * @param int $document_id
+     *
      * @return Response
      */
     public function readDocumentAction($document_id)
     {
+        //Load entities from DB
         /**
          * @var WebUser $user
          */
-        $user = $this->getUser();
+        $user                  = $this->getUser();
+        $unlocked_document_ids = $user->getUnlockedDocumentIds();
 
-        if (!in_array($document_id, $user->getUnlockedDocumentIds())) {
+        /**
+         * @var Document $document
+         */
+        $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+
+        //Check user should be able to view this document
+        if (!in_array($document_id, $unlocked_document_ids)) {
             throw $this->createAccessDeniedException('You have not unlocked this document yet.');
         }
 
-        $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+        //Compile some information on how to unlock the next document.
+        $unlockable_document_ids    = $document->getNextDocumentIds();
+        $unlockable_documents       = $document->getNextDocuments();
+        $has_unlocked_next_document = count(array_intersect($unlocked_document_ids, $unlockable_document_ids)) != 0;
+        $unlock_type                = $unlockable_documents[0]->getUnlockType()->getName();
+        $unlock_prompt              = $unlockable_documents[0]->getUnlockPrompt();
 
         return $this->render(
             'Four026CabinetBundle:UserDesk:read.html.twig',
             [
-                'user'     => $user,
-                'document' => $document
+                'user'                    => $user,
+                'document'                => $document,
+                'hasUnlockedNextDocument' => $has_unlocked_next_document,
+                'unlockType'              => $unlock_type,
+                'unlockPrompt'            => $unlock_prompt
             ]
         );
     }
 
     /**
      * Page at which the current user can read the specified note.
+     *
      * @param int $note_id
+     *
      * @return Response
      */
     public function readNoteAction($note_id)
@@ -100,6 +123,7 @@ class UserDeskController extends Controller
      * Form submission handler for the passphrase handshake
      *
      * @param Request $request
+     *
      * @return RedirectResponse|Response
      */
     public function submitCodePhraseHandshakeFormAction(Request $request)
@@ -110,7 +134,7 @@ class UserDeskController extends Controller
         $user = $this->getUser();
 
         $handshake = new CodePhraseHandshake();
-        $form = $this->createForm(new CodePhraseHandshakeType(), $handshake);
+        $form      = $this->createForm(new CodePhraseHandshakeType(), $handshake);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -118,7 +142,7 @@ class UserDeskController extends Controller
             /**
              * @var WebUserRepository $repo
              */
-            $repo = $this->getDoctrine()->getRepository('Four026CabinetBundle:WebUser');
+            $repo                = $this->getDoctrine()->getRepository('Four026CabinetBundle:WebUser');
             $prospective_partner = $repo->findOneByUsername($handshake->getPartnerName());
 
             //If the user exists, and the passphrases match...
@@ -134,7 +158,7 @@ class UserDeskController extends Controller
             }
         }
 
-        $fields = ['user' => $user];
+        $fields                = ['user' => $user];
         $fields['partnerForm'] = $form->createView();
 
         return $this->render('Four026CabinetBundle:UserDesk:deskMain.html.twig', $fields);
@@ -142,7 +166,9 @@ class UserDeskController extends Controller
 
     /**
      * Endpoint that handles a user selecting a character.
+     *
      * @param string $character_name
+     *
      * @return RedirectResponse
      */
     public function chooseCharacterAction($character_name)
@@ -153,13 +179,18 @@ class UserDeskController extends Controller
         $user = $this->getUser();
 
         if ($user->getCharacter() != null) {
+            $this->addFlash(
+                'alert-error',
+                'Your character has already been assigned. You are ' . $user->getCharacter()->getName() . '.'
+            );
+
             return $this->redirect($this->generateUrl('desk_main'));
         }
 
         //Load character entities
         $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
-        $selected_character = $character_repository->findOneByName($character_name);
-        $other_character = $character_repository
+        $selected_character   = $character_repository->findOneByName($character_name);
+        $other_character      = $character_repository
             ->createQueryBuilder('c')
             ->where('c.name != :name')
             ->setParameter('name', $character_name)
@@ -167,16 +198,16 @@ class UserDeskController extends Controller
             ->getSingleResult();
 
         //Get starting documents to unlock for each player.
-        $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
+        $document_repository   = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
         $unlockType_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:DocumentUnlockMethod');
-        $unlock_at_start = $unlockType_repository->findOneByName('Start');
-        $user_document = $document_repository->findOneBy(
+        $unlock_at_start       = $unlockType_repository->findOneByName('Start');
+        $user_document         = $document_repository->findOneBy(
             [
                 'character'  => $selected_character->getId(),
                 'unlockType' => $unlock_at_start->getId()
             ]
         );
-        $partner_document = $document_repository->findOneBy(
+        $partner_document      = $document_repository->findOneBy(
             [
                 'character'  => $other_character->getId(),
                 'unlockType' => $unlock_at_start->getId()
@@ -196,6 +227,55 @@ class UserDeskController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirect($this->generateUrl('desk_main'));
+    }
+
+    public function DocumentTryPasswordAction(Request $request, $document_id)
+    {
+        /**
+         * @var WebUser $user
+         */
+        $user = $this->getUser();
+        /**
+         * @var Document $document
+         */
+        $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+
+        //Check user should be able to unlock this document (ie. that they already have the prior document)
+        if (!$user->getUnlockedDocuments()->contains($document->getPreviousDocument())) {
+            $this->addFlash('alert-error', 'You have not unlocked the previous document yet.');
+
+            return $this->redirect(
+                $this->generateUrl('read_document', ['document_id' => $document->getPreviousDocument()->getId()])
+            );
+        }
+
+        //Check password was provided
+        if (!$request->request->has('password')) {
+            $this->addFlash('alert-error', 'No password provided to unlock document.');
+
+            return $this->redirect(
+                $this->generateUrl('read_document', ['document_id' => $document->getPreviousDocument()->getId()])
+            );
+        }
+
+        //Check password is correct
+        if ($request->request->get('password') != $document->getUnlockParam()) {
+            $this->addFlash('alert-warning', 'Incorrect password.');
+
+            return $this->redirect(
+                $this->generateUrl('read_document', ['document_id' => $document->getPreviousDocument()->getId()])
+            );
+        }
+
+        //Unlock document
+        //TODO: Unlock partner's document too.
+        $user->addUnlockedDocument($document);
+
+        //Save changes
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash('alert-success', 'New document unlocked!');
+        return $this->redirect( $this->generateUrl('user_desk'));
     }
 
 }

@@ -33,6 +33,7 @@ class DocumentType extends AbstractType
                 'class' => 'Four026CabinetBundle:DocumentUnlockMethod',
                 'expanded' => true
             ])
+            ->add('unlockPrompt', 'text', ['label' => 'Unlock prompt', 'required' => false])
             ->add('unlockParam', 'text', ['label' => 'Unlock parameters', 'required' => false])
             ->add('save', 'submit')
         ;

@@ -36,7 +36,7 @@
     <div class="tab-content">
 
         <!-- Users -->
-        <div role="tabpanel" class="tab-pane active" id="users">
+        <div role="tabpanel" class="tab-pane active container-fluid" id="users">
             <div class="row">
                 {% for user in users %}
                     <div class='col-sm-6 col-md-3'>
@@ -113,12 +113,38 @@
                 {% for document in documents %}
                     <div class='panel panel-default'>
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ document.name }} - {{ document.character.name }}</h3>
+                            <h3 class="panel-title">{{ document.name }}</h3>
                         </div>
                         <div class="panel-body">
-                            {% autoescape false %}
-                            {{ document.bodyText }}
-                            {% endautoescape %}
+                            <dl class="dl-horizontal">
+                                <dt>Character</dt>
+                                <dd>{{ document.character.name }}</dd>
+
+                                <dt>Previous document</dt>
+                                <dd>
+                                    {% if document.previousDocument is not null %}
+                                        {{ document.previousDocument.name }}
+                                    {% else %}
+                                        <i class="text-muted">(none)</i>
+                                    {% endif %}
+                                </dd>
+
+                                <dt>Unlock method</dt>
+                                <dd>{{ document.unlockType.name }}</dd>
+
+                                <dt>Unlock prompt</dt>
+                                <dd>{{ document.unlockPrompt }}</dd>
+
+                                <dt>Unlock parameter</dt>
+                                <dd>{{ document.unlockParam }}</dd>
+
+                                <dt>Body Text</dt>
+                                <dd>
+                                    {% autoescape false %}
+                                    {{ document.bodyText }}
+                                    {% endautoescape %}
+                                </dd>
+                            </dl>
                         </div>
                     </div>
                 {% endfor %}

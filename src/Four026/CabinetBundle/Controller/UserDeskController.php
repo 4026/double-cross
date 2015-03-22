@@ -2,6 +2,7 @@
 
 namespace Four026\CabinetBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use Four026\CabinetBundle\Entity\CodePhraseHandshake;
 use Four026\CabinetBundle\Entity\Document;
 use Four026\CabinetBundle\Entity\WebUser;
@@ -188,6 +189,10 @@ class UserDeskController extends Controller
         }
 
         //Load character entities
+        /**
+         * @todo Create a character repository that defines its methods and the types it returns better than EntityRepository.
+         * @var EntityRepository $character_repository
+         */
         $character_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:PlayerCharacter');
         $selected_character   = $character_repository->findOneByName($character_name);
         $other_character      = $character_repository
@@ -231,21 +236,38 @@ class UserDeskController extends Controller
 
     public function DocumentTryPasswordAction(Request $request, $document_id)
     {
+        //Load entities
         /**
          * @var WebUser $user
          */
         $user = $this->getUser();
+        $partner = $user->getPartner();
+
+        /**
+         * @todo Create a Document repository that defines its methods and the types it returns better than EntityRepository.
+         * @var EntityRepository $document_repository
+         */
+        $document_repository = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document');
         /**
          * @var Document $document
          */
-        $document = $this->getDoctrine()->getRepository('Four026CabinetBundle:Document')->find($document_id);
+        $document = $document_repository->find($document_id);
 
         //Check user should be able to unlock this document (ie. that they already have the prior document)
         if (!$user->getUnlockedDocuments()->contains($document->getPreviousDocument())) {
             $this->addFlash('alert-error', 'You have not unlocked the previous document yet.');
 
             return $this->redirect(
-                $this->generateUrl('read_document', ['document_id' => $document->getPreviousDocument()->getId()])
+                $this->generateUrl('desk_main')
+            );
+        }
+
+        //Check user has not already unlocked this document
+        if ($user->getUnlockedDocuments()->contains($document)) {
+            $this->addFlash('alert-error', 'You have already unlocked that document.');
+
+            return $this->redirect(
+                $this->generateUrl('desk_main')
             );
         }
 
@@ -267,15 +289,36 @@ class UserDeskController extends Controller
             );
         }
 
-        //Unlock document
-        //TODO: Unlock partner's document too.
+        //Unlock document for current user.
         $user->addUnlockedDocument($document);
+
+        /**
+         * Find documents for the partner's character that have the "Partner" unlock method.
+         * @var Document[] $partner_documents
+         */
+        $partner_documents = $document_repository->createQueryBuilder('d')
+            ->join('d.unlockType', 't')
+            ->join('d.character', 'c')
+            ->where('t.name = :type')
+            ->andWhere('c.id = :character')
+            ->setParameter('type', 'Partner')
+            ->setParameter('character', $partner->getCharacter()->getId())
+            ->getQuery()
+            ->getResult();
+
+        foreach ($partner_documents as $partner_document) {
+            // If the partner has unlocked the previous document to a document that has the "Partner" unlock method,
+            // unlock that document now.
+            if (in_array($partner_document->getPreviousDocument()->getId(), $partner->getUnlockedDocumentIds())) {
+                $partner->addUnlockedDocument($partner_document);
+            }
+        }
 
         //Save changes
         $this->getDoctrine()->getManager()->flush();
 
         $this->addFlash('alert-success', 'New document unlocked!');
-        return $this->redirect( $this->generateUrl('user_desk'));
+        return $this->redirect( $this->generateUrl('desk_main'));
     }
 
 }
